@@ -1,0 +1,76 @@
+{% extends "djordan/base.html" %}
+{% load static from staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">Guest Checkout for Bayo Opadeyi</h1>
+{% endblock pageheader %}
+
+{% block panelheader %}
+Guest Checkout
+{% endblock panelheader %}
+
+{% block breadcrumb %}
+    <!-- START BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="{% url 'tracker_action_list' %}">Home</a></li>
+        <li class="active">Guest Checkout</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+{% endblock breadcrumb %}
+
+{% block pagecontent %}
+<div class="row">
+    <div class="col-lg-6">
+      <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+               <tbody>
+               <tr>
+                   <td>Name</td>
+                   <td>{{ guest.full_name}}</td>
+               </tr>
+               <tr>
+                   <td>Room #</td>
+                   <td>{{ guest.room }}</td>
+               </tr>
+               <tr>
+                   <td>Accommodation Bill</td>
+                   <td>30,000</td>
+               </tr>
+               <tr>
+                   <td>Bar Bill</td>
+                   <td>5,000</td>
+               </tr>
+               <tr>
+                   <td>Restaurant</td>
+                   <td>3,500</td>
+               </tr>
+               <tr>
+                   <td>Total</td>
+                   <td>38,500</td>
+               </tr>
+              
+               <tr>
+
+               </tr>
+               </tbody>
+           </table>
+       </div>
+       <div>
+            <a href="#" type="submit" value="Check Out" class="btn btn-primary">Check Out</a>
+       </div>
+    </div>
+    <div class="col-lg-6">
+       <div>
+           <a href="#" class="btn btn-primary">Print Bill</a>
+       </div>
+    </div>
+</div>
+
+{% endblock pagecontent %}
+
+{% block extra-footer-js %}
+<script type="text/javascript">
+    $('#id_text').addClass('form-control')
+    $('#id_num_workers').addClass('form-control')
+</script>
+{% endblock extra-footer-js %}

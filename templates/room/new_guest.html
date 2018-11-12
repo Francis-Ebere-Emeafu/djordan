@@ -1,0 +1,165 @@
+{% extends "room/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block pageheader %}
+    <h1 class="page-header">New Guest</h1>
+{% endblock pageheader %}
+
+{% block panelheader %}
+New Guest
+{% endblock panelheader %}
+
+{% block breadcrumb %}
+    <!-- START BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
+        <li class="active">New Guest</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+{% endblock breadcrumb %}
+
+{% block pagecontent %}
+<div class="row">
+    <div class="col-md-12">
+        <form id="action_form" action="" method="post" role="form" class="form-horizontal">{% csrf_token %}
+        <div class="panel panel-default">
+            
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="panel-heading"><h3>New Guest</h3></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        {% for fld in form %}
+                        <div class="form-group">
+                            {% if fld.errors %}
+                                <div class="alert alert-danger">
+                                    {{fld.errors}}
+                                </div>
+                            {% endif %}
+                            <label for={{fld.id_for_label}} class="col-md-3 control-label">{{fld.label}}</label>
+                            <div class="col-md-9">
+                                {{ fld}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                      
+                    </div>
+                </div>
+            </div>
+     
+            <div class="panel-footer">
+                <div class="col-md-6 col-md-offset-3">
+                <button type="submit" value="Save Guest Information" class="btn btn-primary btn-block">Save Guest Information</button>
+                    
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+    
+        </div>
+    </form>        
+    </div>
+</div>
+{% endblock pagecontent %}
+
+{% block extra-footer-js %}
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+
+<script type="text/javascript">
+    $('input').addClass('form-control');
+    $('select').addClass('form-control');
+
+    $('#id_address').addClass('form-control');
+    $('#id_subject').addClass('form-control');
+    $('#id_priority').addClass('form-control');
+    $('#id_minuted_to').addClass('form-control');
+    $('#id_document').addClass('form-control');
+    $('#id_document_name').addClass('form-control');
+   
+    $('#id_due_date').addClass('form-control');
+    $('#id_due_date').datepicker({
+        autoclose: true
+    });
+    $('#id_description').addClass('form-control');
+
+    var jvalidate = $("#action_form").validate({
+        rules: {
+            mda: {
+                required: true,
+                minlength: 2,
+            },
+            document_name: {
+                required: true
+            },
+            document: {
+                required: true
+            },
+            subject: {
+                required: true
+            },
+            minuted_to: {
+                required: true
+            },
+            priority: {
+                required: true
+            },
+            due_date: {
+                required: true,
+                date: true
+            }
+        }
+    })
+</script>
+ <script type="text/javascript">
+            var jvalidate = $("#jvalidate").validate({
+                ignore: [],
+                rules: {                                            
+                        login: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 8
+                        },
+                        password: {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 10
+                        },
+                        're-password': {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 10,
+                                equalTo: "#password2"
+                        },
+                        age: {
+                                required: true,
+                                min: 18,
+                                max: 100
+                        },
+                        email: {
+                                required: true,
+                                email: true
+                        },
+                        date: {
+                                required: true,
+                                date: true
+                        },
+                        credit: {
+                                required: true,
+                                creditcard: true
+                        },
+                        site: {
+                                required: true,
+                                url: true
+                        }
+                    }                                        
+                });                                    
+
+        </script>
+{% endblock extra-footer-js %}
