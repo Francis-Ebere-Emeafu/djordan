@@ -1,0 +1,40 @@
+<form action="." method="post">{% csrf_token %}
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <div class="has-error">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+        {% if form.username.errors %}
+            <p class="help_block">
+                {{ form.username.errors }}
+            </p>
+        {% endif %}
+        {{ form.username }}
+    </div>
+
+    <div class="form-group {% if form.password.errors %}has-error{% endif %}">
+        {% if form.password.errors %}
+            <p class="help_block">
+                {{ form.password.errors }}
+            </p>
+        {% endif %}
+        {{ form.password }}
+    </div>
+
+    <div class="forgot-grid">
+    <!-- <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Remember me</label>
+    <div class="forgot">
+    <a href="">forgot password?</a>
+    </div> -->
+    <div class="clearfix"> </div>
+    </div>
+    <input type="submit" value="Login">
+    <div class="registration">
+    Keeping The Environment Clean Is Our Job
+    <!-- <a class="" href="">Create an account</a> -->
+    </div>
+</form>
