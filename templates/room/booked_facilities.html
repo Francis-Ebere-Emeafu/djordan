@@ -12,18 +12,18 @@
 {% endblock extra-css %}
 
 {% block pageheader %}
-    <h1 class="page-header">Facilities</h1>
+    <h1 class="page-header">Booked Facilities</h1>
 {% endblock pageheader %}
 
 {% block panelheader %}
-List of Facilities
+List of Booked Facilities
 {% endblock panelheader %}
 
 {% block breadcrumb %}
     <!-- START BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
-        <li class="active">List of Facilities</li>
+        <li class="active">List of Booked Facilities</li>
     </ul>
     <!-- END BREADCRUMB -->
 {% endblock breadcrumb %}
@@ -32,7 +32,7 @@ List of Facilities
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Facilities</h3>
+                <h3 class="panel-title">Booked Facilities</h3>
                 <a href="{% url 'booking_facility' %}" class="pull-right btn btn-primary"><i class="fa fa-home"></i> Book Facility</a>
             </div>
             <div class="panel-body">
@@ -48,17 +48,21 @@ List of Facilities
     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
          <thead>
              <tr>
+                 <th>Client </th>
                  <th>Facility </th>
                  <th>Cost</th>
+                 <th>Booked Date </th>
                  <th>Details</th>
              </tr>
          </thead>
          <tbody>
-         {% for facility in facilities %}
+         {% for booked in facilities %}
          <tr>
-             <td>{{ facility.name }}</td>
-             <td>{{ facility.cost }}</td>
-             <td><a href="{% url 'hotel_booking' id=facility.id %}" class="btn btn-success">Booking</a></td>
+             <td>{{ booked.name }}</td>
+             <td>{{ booked.facility.name }}</td>
+             <td>{{ booked.facility.cost }}</td>
+             <td>{{ booked.booked_date }}</td>
+             <td><a href="{% url 'hotel_booking' id=booked.id %}" class="btn btn-success">Booking</a></td>
          </tr>
          {% endfor %}
          </tbody>

@@ -1,0 +1,84 @@
+{% load staticfiles %}
+<li class="xn-title">Front Desk Navigation</li> 
+<li class="treeview active">
+    <a href="#" id="menu-front-desk">Front Desk</a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="{% url 'hotel_guest_list' %}"><span class="fa fa-users"></span> <span class="xn-text">Guests</span></a>
+        </li>
+        
+        <li>
+            <a href="{% url 'view_room_with_date' %}">
+                <span class="fa fa-hotel">  </span>
+             <span class="xn-text">Guests Room By Dates</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_room_list' %}"><span class="fa fa-building"></span> <span class="xn-text">List of Rooms</span></a>
+        </li>
+        <li>
+            <a href="{% url 'booked_facilities' %}"></span> <span class="fa fa-home"></span><span class="xn-text">Book Facility</span></a>
+        </li>
+         <li>
+            <a href="{% url 'hotel_facility_list' %}"></span> <span class="fa fa-home"></span><span class="xn-text">List of Facilities</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_housekeeping_list' %}"><span class="fa fa-gears"></span> <span class="xn-text">House Keeping</span></a>
+        </li>
+    </ul>
+</li> 
+<!--
+<li class="treeview active">
+    <a href="#" id="menu-front-desk">Bills</a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="{% url 'hotel_bill_list' id=0 %}"><span class="fa fa-cutlery"></span> <span class="xn-text">Restaurant</span></a>
+        </li>
+        <li>
+                <a href="{% url 'hotel_bill_list' id=1 %}"><span class="fa fa-beer"></span> <span class="xn-text">Main Bar</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_bill_list' id=2 %}"><span class="fa fa-glass"></span> <span class="xn-text">Pool Bar</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_bill_list' id=3 %}"><span class="fa fa-clone"></span> <span class="xn-text">Laundry</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_bill_list' id=4 %}"><span class="fa fa-heartbeat"></span> <span class="xn-text">Gym</span></a>
+        </li>
+    </ul>
+</li>
+<li class="treeview active">
+    <a href="#" id="menu-front-desk">Inventory</a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="{% url 'hotel_inventory_list' id=3 %}"><span class="fa fa-users"></span> <span class="xn-text">Store</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_inventory_list' id=1 %}"><span class="fa fa-building"></span> <span class="xn-text">Main Bar</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_inventory_list' id=0 %}"><span class="fa fa-hotel"></span> <span class="xn-text">Restaurant</span></a>
+        </li>
+        <li>
+            <a href="{% url 'hotel_inventory_list' id=2 %}"><span class="fa fa-gears"></span> <span class="xn-text">Pool Bar</span></a>
+        </li>
+    </ul>
+</li> 
+<li class="treeview active">
+        <a href="#" id="menu-front-desk">Reports</a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{% url 'hotel_guest_list' %}"><span class="fa fa-users"></span> <span class="xn-text">Guests</span></a>
+            </li>
+            <li>
+                <a href="{% url 'hotel_room_list' %}"><span class="fa fa-building"></span> <span class="xn-text">Rooms</span></a>
+            </li>
+            <li>
+                <a href="{% url 'hotel_facility_list' %}"><span class="fa fa-hotel"></span> <span class="xn-text">Facilities</span></a>
+            </li>
+            <li>
+                <a href="{% url 'hotel_housekeeping_list' %}"><span class="fa fa-gears"></span> <span class="xn-text">House Keeping</span></a>
+            </li>
+        </ul>
+    </li>
+-->

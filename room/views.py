@@ -1,16 +1,36 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from datetime import timedelta, date  # datetime
+from decimal import Decimal
+
 from django.contrib import messages
+from django.db.models.aggregates import Sum
+from django.db.models.functions import (ExtractDay)
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import get_template
 from django.utils import timezone
+from django.views.generic import View
 
 from room.models import Guest, Room, Facility, Booking, HouseKeeping,\
     Requisition, RequisitionMaster, Bill, Inventory, Purchase, PurchaseMaster,\
     Transfer
 from room.forms import GuestForm, BookingForm, RequisitionForm, PurchaseForm,\
-    TransferForm
+    TransferForm, GuestChangeForm
+from searchdates.daterange import DateSearchForm
+from user_profile.utils import render_to_pdf
 
 
 def guest_list(request):
     guests = Guest.objects.all()
+    return render(request, 'room/guest_list.html', {'guests': guests})
+
+
+def occupied_guest_list(request):
+    guests = Guest.objects.all().filter(checked_out=False)
+    return render(request, 'room/guest_list.html', {'guests': guests})
+
+
+def checkedout_guest_list(request):
+    guests = Guest.objects.all().filter(checked_out=True)
     return render(request, 'room/guest_list.html', {'guests': guests})
 
 
@@ -34,9 +54,85 @@ def room_list(request):
     return render(request, 'room/room_list.html', {'rooms': rooms})
 
 
+def change_departure_date(request, id):
+    # Get instance of a guests details and edit only the departure date incase
+    # the guest no longer wants to stay for all the initial dates booked for
+    guest = get_object_or_404(Guest, pk=id)
+    form = GuestChangeForm(request.POST or None, instance=guest)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return redirect('hotel_guest_list')
+
+    return render(request, 'room/change_departure.html', {'form': form})
+
+
 def check_out(request, id):
     guest = get_object_or_404(Guest, pk=id)
-    return render(request, 'room/check_out.html', {'guest': guest})
+    bills = Bill.objects.filter(guest=guest)
+    service_bills = bills.aggregate(
+        Sum('amount'))['amount__sum'] or Decimal(0)
+
+    days = guest.departure_date - guest.arrival_date
+    if not days.days == 0:
+        accomodation_bill = guest.room.room_type.cost * days.days
+    else:
+        accomodation_bill = guest.room.room_type.cost
+
+    context = {
+        'guest': guest,
+        'bills': bills,
+        'accomodation_bill': accomodation_bill,
+        'total': accomodation_bill + service_bills - guest.deposit,
+    }
+    return render(request, 'room/check_out.html', context)
+
+
+def pre_check_out(request, id):
+    guest = get_object_or_404(Guest, pk=id)
+    bills = Bill.objects.filter(guest=guest)
+    service_bills = bills.aggregate(
+        Sum('amount'))['amount__sum'] or Decimal(0)
+
+    days = guest.departure_date - guest.arrival_date
+    if not days.days == 0:
+        accomodation_bill = guest.room.room_type.cost * days.days
+    else:
+        accomodation_bill = guest.room.room_type.cost
+
+    context = {
+        'guest': guest,
+        'bills': bills,
+        'accomodation_bill': accomodation_bill,
+        'total': accomodation_bill + service_bills - guest.deposit,
+    }
+    return render(request, 'room/pre_check_out.html', context)
+
+
+def get_default_dates():
+    end_date = date.today()
+    start_date = end_date - timedelta(5)
+    return start_date, end_date
+
+
+def view_room_with_date(request):
+    start = request.GET.get('start', None)
+    if start:
+        form = DateSearchForm(request.GET)
+        if form.is_valid():
+            start_date = form.cleaned_data['start']
+            end_date = form.cleaned_data['end']
+    else:
+        form = DateSearchForm()
+        start_date, end_date = get_default_dates()
+
+    _rooms = Guest.objects.filter(
+        arrival_date__range=(start_date, end_date), checked_out=False)
+    context = {
+        'searched_rooms': _rooms,
+        'form': form,
+    }
+    return render(request, 'room/room_with_date.html', context)
 
 
 def facility_list(request):
@@ -45,10 +141,26 @@ def facility_list(request):
         request, 'room/facilities.html', {'facilities': facilities})
 
 
-def new_booking(request, day, month, year):
-    #booking_date = timezone.datetime(year, month, day)
-    form = BookingForm()
-    return render(request, 'room/new_booking.html', {'form': form})
+def booked_facilities(request):
+    facilities = Booking.objects.filter(facility__occupied = True)
+    return render(
+        request, 'room/booked_facilities.html', {'facilities': facilities})
+
+
+def booking_facility(request):
+    # booking_date = timezone.datetime(year, month, day)
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save()
+            facility = booking.facility
+            facility.occupied = True
+            facility.save()
+            messages.info(request, 'Your facility has been booked')
+            return redirect('hotel_facility_list')
+    else:
+        form = BookingForm()
+    return render(request, 'room/booking_facility.html', {'form': form})
 
 
 def booking(request, id):
@@ -88,6 +200,7 @@ def new_requisition(request):
             'form': form,
             'requisitions': Requisition.objects.none()
         })
+
 
 def requisition(request, id):
     master = get_object_or_404(RequisitionMaster, pk=id)
@@ -131,13 +244,16 @@ location_map = {
 
 def bills(request, id):
     bills = Bill.objects.filter(service=id)
-    service = service_map[id]
+    # service = service_map[id]
+    bills2 = Bill.objects.all()
+    for bill in bills2:
+        print(bill)
     return render(
         request,
         'room/bills.html',
         {
             'bills': bills,
-            'service': service
+            'service': 'service'
         }
     )
 
@@ -261,3 +377,42 @@ def transfer(request):
             'transfers': disbursements
         }
     )
+
+
+class GeneratePDF(View):
+    # Class based function to generate a pdf invoice for
+    #  the guest's expenditures
+    def get(self, request, id, *args, **kwargs):
+        # template = get_template('room/print_bill.html')
+        guest = get_object_or_404(Guest, pk=id)
+        bills = Bill.objects.filter(guest=guest)
+        days = guest.departure_date - guest.arrival_date
+        print (type(days))
+        print(days)
+
+        service_bills = bills.aggregate(
+            Sum('amount'))['amount__sum'] or Decimal(0)
+
+        if not days.days == 0:
+            accomodation_bill = guest.room.room_type.cost * days.days
+        else:
+            accomodation_bill = guest.room.room_type.cost
+
+        context = {
+            'guest': guest,
+            'bills': bills,
+            'accomodation_bill': accomodation_bill,
+            'total': accomodation_bill + service_bills - guest.deposit,
+        }
+        # html = template.render(context)
+        pdf = render_to_pdf('room/print_bill.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" % ("guest.id")
+            content = "inline; filename='%s'" % (filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" % (filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Document not found")

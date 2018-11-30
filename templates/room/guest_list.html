@@ -37,12 +37,27 @@ List of Guests
             </div>
             <div class="panel-body">
                 <p>
+
+                    <a href="{% url 'occupied_guest_list' %}"
+                        class="pull-left btn btn-primary">
+                        <i class="fa fa-search"></i> Checked In Guests</a>
+                        <span>&nbsp</span>
+                    <a href="{% url 'checkedout_guest_list' %}"
+                        class="pull-right btn btn-primary">
+                        <i class="fa fa-search"></i> Checked Out Guests</a>
+
                     <form method="get" action="">
-                        <label>Search:
+                        
+                        <label>
+                            {% comment %}Search:
+
                             {{ form.term }}
-                            {% comment %}<input type="text" name="term" class="form-control" placeholder='search' />{% endcomment %}
+                            <input type="text" name="term" class="form-control" placeholder='search' />
+                            {% endcomment %}
                         </label>
+
                     </form>
+                    
                 </p>
                 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -68,9 +83,14 @@ List of Guests
              <td>{{ guest.other_names }}</td>
              <td>{{ guest.phone_number }}</td>
              <td>{{ guest.arrival_date }}</td>
-             <td>{{ guest.departure_date }}</td>
+             <td class="roundedtip">
+                <a href="{% url 'change_date' id=guest.id %}" >
+                    {{ guest.departure_date }}
+                </a>
+                <span class="roundedtiptext">Change departure date</span>
+            </td>
              <td>{{ guest.car_number }}</td>
-             <td><a href="{% url 'hotel_check_out' id=guest.id %}" class="btn btn-success">check out</a></td>
+             <td><a href="{% url 'pre_check_out' id=guest.id %}" class="btn btn-success">check out</a></td>
          </tr>
          {% endfor %}
          </tbody>

@@ -12,18 +12,18 @@
 {% endblock extra-css %}
 
 {% block pageheader %}
-    <h1 class="page-header">Facilities</h1>
+    <h1 class="page-header">Guests</h1>
 {% endblock pageheader %}
 
 {% block panelheader %}
-List of Facilities
+List of Guests
 {% endblock panelheader %}
 
 {% block breadcrumb %}
     <!-- START BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
-        <li class="active">List of Facilities</li>
+        <li class="active">Occupied Rooms By Date</li>
     </ul>
     <!-- END BREADCRUMB -->
 {% endblock breadcrumb %}
@@ -32,33 +32,51 @@ List of Facilities
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Facilities</h3>
-                <a href="{% url 'booking_facility' %}" class="pull-right btn btn-primary"><i class="fa fa-home"></i> Book Facility</a>
+                <h3 class="panel-title">Search Occupied Guest's Rooms By Date</h3>
+                <!--<a href="{% url 'view_room_with_date' %}" class="pull-right btn btn-primary"><i class="fa fa-search"></i>Search</a> -->
             </div>
             <div class="panel-body">
                 <p>
-                    <form method="get" action="">
+                    <form method="get" action="">{% csrf_token %}
                         <label>Search:
-                            {{ form.term }}
+                            {{ form }}
                             {% comment %}<input type="text" name="term" class="form-control" placeholder='search' />{% endcomment %}
                         </label>
+                        <input type="submit" name="submit">
                     </form>
                 </p>
                 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
          <thead>
              <tr>
-                 <th>Facility </th>
-                 <th>Cost</th>
+                 <th>Room </th>
+                 <th>Account</th>
+                 <th>Surname</th>
+                 <th>Other names</th>
+                 <th>Phone</th>
+                 <th>Arrival</th>
+                 <th>Departure</th>
+                 <th>Car</th>
                  <th>Details</th>
              </tr>
          </thead>
          <tbody>
-         {% for facility in facilities %}
+         {% for guest in searched_rooms %}
          <tr>
-             <td>{{ facility.name }}</td>
-             <td>{{ facility.cost }}</td>
-             <td><a href="{% url 'hotel_booking' id=facility.id %}" class="btn btn-success">Booking</a></td>
+             <td>{{ guest.room.room_number }} ({{guest.room.room_type}})</td>
+             <td>{{ guest.account }}</td>
+             <td>{{ guest.surname }}</td>
+             <td>{{ guest.other_names }}</td>
+             <td>{{ guest.phone_number }}</td>
+             <td>{{ guest.arrival_date }}</td>
+             <td class="roundedtip">
+                <a href="{% url 'change_date' id=guest.id %}" >
+                    {{ guest.departure_date }}
+                </a>
+                <span class="roundedtiptext">Change departure date</span>
+            </td>
+             <td>{{ guest.car_number }}</td>
+             <td><a href="{% url 'pre_check_out' id=guest.id %}" class="btn btn-success">check out</a></td>
          </tr>
          {% endfor %}
          </tbody>

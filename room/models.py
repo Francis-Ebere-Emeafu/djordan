@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.utils import timezone
 
@@ -31,15 +33,16 @@ class CompanyAccount(models.Model):
 
 
 class Guest(models.Model):
-    FEMALE = 0
-    MALE = 1
-    SEXES = enumerate(('Female', 'Male'))
+    SELECT = 0
+    FEMALE = 1
+    MALE = 2
+    SEXES = enumerate(('Select', 'Female', 'Male'))
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     deposit = models.DecimalField(decimal_places=2, max_digits=10)
     surname = models.CharField(max_length=200)
     other_names = models.CharField(max_length=200)
-    sex = models.PositiveIntegerField(choices=SEXES)
+    sex = models.PositiveIntegerField(choices=SEXES, default="Select ")
     nationality = models.CharField(max_length=100)
     occupation = models.CharField(max_length=100)
     address = models.TextField(blank=True)
@@ -64,10 +67,14 @@ class Guest(models.Model):
     def full_name(self):
         return '{} {}'.format(self.other_names, self.surname)
 
+    class Meta:
+        ordering = ["-arrival_date"]
+
 
 class Facility(models.Model):
     name = models.CharField(max_length=200)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+    occupied = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -79,8 +86,9 @@ class Booking(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     name = models.CharField(max_length=200, blank=True)
     phone = models.CharField(max_length=50, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return unicode(self.facility)
 
 

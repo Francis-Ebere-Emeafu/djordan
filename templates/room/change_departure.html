@@ -32,12 +32,70 @@ New Guest
                     </div>
                 {% endfor %}
             {% endif %}
-            <div class="panel-heading"><h3>New Guest</h3></div>
+            <div class="panel-heading"><h3>Change Departure Date</h3></div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
 
-                        {% for fld in form %}
+                        <!--
+                        <div class="form-group">
+                            {% if form.surname.errors %}
+                                <div class="alert alert-danger">
+                                    {{form.surname.errors}}
+                                </div>
+                            {% endif %}
+                            <label class="col-md-3 control-label">{{form.surname.label}}</label>
+                            <div class="col-md-9">
+                                {{ form.surname }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {% if form.other_names.errors %}
+                                <div class="alert alert-danger">
+                                    {{form.other_names.errors}}
+                                </div>
+                            {% endif %}
+                            <label class="col-md-3 control-label">{{form.other_names.label}}</label>
+                            <div class="col-md-9">
+                                {{ form.other_names }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            {% if form.room.errors %}
+                                <div class="alert alert-danger">
+                                    {{form.room.errors}}
+                                </div>
+                            {% endif %}
+                            <label class="col-md-3 control-label">{{form.room.label}}</label>
+                            <div class="col-md-9">
+                                {{ form.room }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {% if form.arrival_date.errors %}
+                                <div class="alert alert-danger">
+                                    {{form.arrival_date.errors}}
+                                </div>
+                            {% endif %}
+                            <label class="col-md-3 control-label">{{form.arrival_date.label}}</label>
+                            <div class="col-md-9">
+                                {{ form.arrival_date }}
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            {% if form.departure_date.errors %}
+                                <div class="alert alert-danger">
+                                    {{form.departure_date.errors}}
+                                </div>
+                            {% endif %}
+                            <label class="col-md-3 control-label">{{form.departure_date.label}}</label>
+                            <div class="col-md-9">
+                                {{ form.departure_date }}
+                            </div>
+                        </div>
+                        -->
+                      {% for fld in form %}
                         <div class="form-group">
                             {% if fld.errors %}
                                 <div class="alert alert-danger">
@@ -50,7 +108,6 @@ New Guest
                             </div>
                         </div>
                         {% endfor %}
-                      
                     </div>
                 </div>
             </div>
@@ -108,6 +165,12 @@ New Guest
         autoclose: true
     });
     $('#id_description').addClass('form-control');
+
+    $('#id_surname').attr('readonly', true);
+    $('#id_other_names').attr('readonly', true);
+    $('#id_room').attr('readonly', true);
+    $('#id_arrival_date').attr('readonly', true);
+    // $('#id_departure_date').attr('placeholder', 'Username');
 
     var jvalidate = $("#action_form").validate({
         rules: {

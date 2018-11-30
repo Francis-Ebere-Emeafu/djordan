@@ -73,7 +73,7 @@ Guest Checkout
            </table>
        </div>
        <div>
-            <a href="#" type="submit" value="Check Out" class="btn btn-primary">Check Out</a>
+            <a href="{% url 'hotel_check_out' id=guest.id %}" type="submit" value="Check Out" class="btn btn-primary">Check Out</a>
        </div>
        
     </div>
