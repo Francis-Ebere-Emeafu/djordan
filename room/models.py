@@ -42,7 +42,7 @@ class Guest(models.Model):
     deposit = models.DecimalField(decimal_places=2, max_digits=10)
     surname = models.CharField(max_length=200)
     other_names = models.CharField(max_length=200)
-    sex = models.PositiveIntegerField(choices=SEXES, default="Select ")
+    sex = models.PositiveIntegerField(choices=SEXES, default=0)
     nationality = models.CharField(max_length=100)
     occupation = models.CharField(max_length=100)
     address = models.TextField(blank=True)

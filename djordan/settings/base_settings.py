@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(0v^e9+-)wi@j2=3yk5%g*ly#tku$8r4u#^u3^&dle0tt+4vk1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['www.djordan3.clearcode.com.ng', 'djordan3.clearcode.com.ng']
+ALLOWED_HOSTS = ['www.djordan.clearcode.com.ng', 'djordan.clearcode.com.ng', 'localhost', '127.0.0.1']
 
 
 # Application definition
