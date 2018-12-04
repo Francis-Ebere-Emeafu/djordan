@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'room.apps.RoomConfig',
     'user_profile.apps.UserProfileConfig',
-    'datetimewidget',
+    # 'datetimewidget',
 ]
 
 MIDDLEWARE = [
