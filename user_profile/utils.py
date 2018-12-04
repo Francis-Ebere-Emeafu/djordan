@@ -10,6 +10,9 @@ def is_admin(user):
     person = User.objects.get(username=user)
     if person.is_superuser:
         return True
+    person = UserProfile.objects.get(user=user)
+    if person.usertype == 'admin':
+        return True
     return False
 
 
