@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -6,9 +7,8 @@ from user_profile.models import UserProfile
 
 
 def is_admin(user):
-    person = UserProfile.objects.get(user=user)
-    print(person.usertype)
-    if person.usertype == 'admin':
+    person = User.objects.get(username=user)
+    if person.is_superuser:
         return True
     return False
 
