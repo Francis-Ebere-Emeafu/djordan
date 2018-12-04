@@ -1,14 +1,14 @@
-from datetimewidget.widgets import DateTimeWidget
+# from datetimewidget.widgets import DateTimeWidget
 from django import forms
 from datetime import date
 
 
-class MyDateField(forms.DateField):
-    widget = DateTimeWidget
+# class MyDateField(forms.DateField):
+#     widget = DateTimeWidget
 
-    def __init__(self, *args, **kwargs):
-        super(MyDateField, self).__init__()
-        self.input_formats = ('%Y-%m-%d',)
+#     def __init__(self, *args, **kwargs):
+#         super(MyDateField, self).__init__()
+#         self.input_formats = ('%Y-%m-%d',)
 
 
 class DateSearchForm(forms.Form):
