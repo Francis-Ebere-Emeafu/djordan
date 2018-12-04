@@ -25,7 +25,7 @@ SECRET_KEY = '(0v^e9+-)wi@j2=3yk5%g*ly#tku$8r4u#^u3^&dle0tt+4vk1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.djordan3.clearcode.com.ng', 'djordan3.clearcode.com.ng']
 
 
 # Application definition
@@ -80,10 +80,17 @@ WSGI_APPLICATION = 'djordan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'djordan3_db',
+        'USER': 'djordan3_db',
+        'PASSWORD': 'pass.p455',
+        'HOST': 'localhost',
+        'PORT': '',
+        'PORT': ''
     }
 }
+
+
 
 
 # Password validation
@@ -130,7 +137,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(STATIC_ROOT, "media")
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
