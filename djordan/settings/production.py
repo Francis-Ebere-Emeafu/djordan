@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'djordan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djordan3_db',
-        'USER': 'djordan3_db',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'djordan_db',
+        'USER': 'djordan_db',
         'PASSWORD': 'pass.p455',
         'HOST': 'localhost',
         'PORT': '',
