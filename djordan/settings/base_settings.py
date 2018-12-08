@@ -78,17 +78,26 @@ WSGI_APPLICATION = 'djordan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djordan_db',
-        'USER': 'djordan_db',
-        'PASSWORD': 'pass.p455',
-        'HOST': 'localhost',
-        'PORT': '',
-        'PORT': ''
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'NAME': "dev.db"
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'djordan_db',
+#         'USER': 'djordan_db',
+#         'PASSWORD': 'pass.p455',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#         'PORT': ''
+#     }
+# }
 
 
 
