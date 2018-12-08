@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    title = models.PositiveIntegerField(choices=TITLE, default=SELECT)
+    title = models.PositiveIntegerField(choices=TITLE, default=0)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
     usertype = models.CharField(max_length=20, choices=USERTYPE_CHOICES, default='front_desk', verbose_name='User Type')
