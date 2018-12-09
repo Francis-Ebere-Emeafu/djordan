@@ -67,7 +67,43 @@ def change_departure_date(request, id):
     return render(request, 'room/change_departure.html', {'form': form})
 
 
-def check_out(request, id):
+def paid_check_out(request, id):
+    guest = get_object_or_404(Guest, pk=id)
+    bills = Bill.objects.filter(guest=guest)
+    if guest:
+        guest.checked_out = True
+        guest.save()
+
+    days = guest.departure_date - guest.arrival_date
+
+    service_bills = bills.aggregate(
+        Sum('amount'))['amount__sum'] or Decimal(0)
+
+    if not days.days == 0:
+        accomodation_bill = guest.room.room_type.cost * days.days
+    else:
+        accomodation_bill = guest.room.room_type.cost
+
+    context = {
+        'guest': guest,
+        'bills': bills,
+        'accomodation_bill': accomodation_bill,
+        'total': accomodation_bill + service_bills - guest.deposit,
+    }
+    pdf = render_to_pdf('room/paid_check_out.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Invoice_%s.pdf" % ("guest.id")
+        content = "inline; filename='%s'" % (filename)
+        download = request.GET.get("download")
+        if download:
+            content = "attachment; filename='%s'" % (filename)
+        response['Content-Disposition'] = content
+        return response
+    return HttpResponse("Document not found")
+
+
+def pay_check_out(request, id):
     guest = get_object_or_404(Guest, pk=id)
     bills = Bill.objects.filter(guest=guest)
     service_bills = bills.aggregate(
@@ -85,7 +121,7 @@ def check_out(request, id):
         'accomodation_bill': accomodation_bill,
         'total': accomodation_bill + service_bills - guest.deposit,
     }
-    return render(request, 'room/check_out.html', context)
+    return render(request, 'room/pay_check_out.html', context)
 
 
 def pre_check_out(request, id):
@@ -142,7 +178,9 @@ def facility_list(request):
 
 
 def booked_facilities(request):
-    facilities = Booking.objects.filter(facility__occupied = True)
+    facilities = Booking.objects.filter(facility__occupied=True)
+    if not facilities:
+        print ('booked facilities: none')
     return render(
         request, 'room/booked_facilities.html', {'facilities': facilities})
 

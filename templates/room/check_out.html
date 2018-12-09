@@ -73,13 +73,13 @@ Guest Checkout
            </table>
        </div>
        <div>
-            <a href="#" type="submit" value="Check Out" class="btn btn-primary">Check Out</a>
+            <a href="{% url 'pre_check_out' id=guest.id %}" type="submit" value="Check Out" class="btn btn-primary">Cancel</a>
        </div>
        
     </div>
     <div class="col-lg-6">
        <div>
-           <a href="{% url 'print_bill_pdf' id=guest.id %}" target="_blank" class="btn btn-primary">Print Bill</a>
+           <a href="{% url 'print_bill_pdf' id=guest.id %}" target="_blank" class="btn btn-primary">Pay and Print Invoice</a>
        </div>
     </div>
 </div>

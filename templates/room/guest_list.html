@@ -90,7 +90,7 @@ List of Guests
                 <span class="roundedtiptext">Change departure date</span>
             </td>
              <td>{{ guest.car_number }}</td>
-             <td><a href="{% url 'pre_check_out' id=guest.id %}" class="btn btn-success">check out</a></td>
+             <td>{% if guest.checked_out %}<a href="#" class="btn btn-info">checked out</a>{% else %}<a href="{% url 'pre_check_out' id=guest.id %}" class="btn btn-success">check out</a>{% endif %}</td>
          </tr>
          {% endfor %}
          </tbody>
