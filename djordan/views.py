@@ -8,7 +8,8 @@ def home(request):
     if is_admin(request.user):
         return redirect('admin_profile')
     elif is_frontdesk(request.user):
-        return redirect('frontdesk_profile')
+        # frontdesk_profile
+        return redirect('hotel_guest_list')
     elif is_laundry(request.user):
         return redirect('laundry_profile')
     elif is_store(request.user):

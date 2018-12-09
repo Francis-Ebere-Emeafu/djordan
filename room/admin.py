@@ -4,7 +4,6 @@ from room.models import RoomType, Room, CompanyAccount, Guest, Facility,\
     Booking, HouseKeeping, Requisition, Bill, Item, Inventory, Transfer
 
 
-
 @admin.register(RoomType)
 class RoomTypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'cost']

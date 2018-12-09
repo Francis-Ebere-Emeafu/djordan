@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     'room.apps.RoomConfig',
     'user_profile.apps.UserProfileConfig',
-    # 'datetimewidget',
 ]
 
 MIDDLEWARE = [
@@ -79,25 +78,26 @@ WSGI_APPLICATION = 'djordan.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # 'NAME': "dev.db"
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'djordan_db',
-#         'USER': 'djordan_db',
-#         'PASSWORD': 'pass.p455',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#         'PORT': ''
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         # 'NAME': "dev.db"
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'djordan_db',
+        'USER': 'djordan_db',
+        'PASSWORD': 'pass.p455',
+        'HOST': 'localhost',
+        'PORT': '',
+        'PORT': ''
+    }
+}
 
 
 

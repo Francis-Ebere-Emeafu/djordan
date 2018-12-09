@@ -28,7 +28,9 @@ class UserProfile(models.Model):
     title = models.PositiveIntegerField(choices=TITLE, default=0)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
-    usertype = models.CharField(max_length=20, choices=USERTYPE_CHOICES, default='front_desk', verbose_name='User Type')
+    usertype = models.CharField(
+        max_length=20, choices=USERTYPE_CHOICES,
+        default='front_desk', verbose_name='User Type')
 
     def __unicode__(self):
         return '{} {} {}'.format(self.title, self.first_name, self.last_name)
