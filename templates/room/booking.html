@@ -31,26 +31,40 @@
     color: #777;
   }
 </style>
-{% endblock extra-css %} {% block pageheader %}
-<h1 class="page-header">Schedule for {{ facility.name }}</h1>
-{% endblock pageheader %} {% block panelheader %} Guest Checkout {% endblock
-panelheader %} {% block breadcrumb %}
-<!-- START BREADCRUMB -->
-<ul class="breadcrumb">
-  <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
-  <li class="active">Schedule</li>
-</ul>
-<!-- END BREADCRUMB -->
-{% endblock breadcrumb %} {% block pagecontent %}
-<div class="row">
-  <div class="col-lg-12">
-    <div id="calendar">{% event_calendar year month event_list %}</div>
-  </div>
-</div>
+{% endblock extra-css %} 
 
-{% endblock pagecontent %} {% block extra-footer-js %}
-<script type="text/javascript">
-  $("#id_text").addClass("form-control");
-  $("#id_num_workers").addClass("form-control");
-</script>
+{% block pageheader %}
+  <h1 class="page-header">Schedule for {{ facility.name }}</h1>
+{% endblock pageheader %} 
+
+{% block panelheader %} Guest Checkout {% endblock panelheader %} 
+
+{% block breadcrumb %}
+  <!-- START BREADCRUMB -->
+  <ul class="breadcrumb">
+    <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
+    <li class="active">Schedule</li>
+  </ul>
+  <!-- END BREADCRUMB -->
+{% endblock breadcrumb %} 
+
+
+{% block pagecontent %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="calendar">
+        {% comment %}
+          {% event_calendar year month event_list %}
+        {% endcomment %}
+    </div>
+    </div>
+  </div>
+{% endblock pagecontent %} 
+
+
+{% block extra-footer-js %}
+  <script type="text/javascript">
+    $("#id_text").addClass("form-control");
+    $("#id_num_workers").addClass("form-control");
+  </script>
 {% endblock extra-footer-js %}

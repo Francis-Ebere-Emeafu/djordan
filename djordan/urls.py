@@ -30,4 +30,5 @@ urlpatterns = [
     # path('accounts/logout/', auth_views.logout_then_login, name='logout'),
     # path('accounts/login/', auth_views.LoginView.as_view(template_name='user_profile/login.html')),
     path('accounts/', include('django.contrib.auth.urls')), # django built-in auth library REGISTRATION FOLDER
+    # path('events2/', include('events2.urls')),
 ]

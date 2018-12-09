@@ -1,0 +1,32 @@
+<style>
+.panel {
+    background-color: #f7ffe6;
+    }
+
+.cal-day {
+    outline: .5px solid #cccccc;
+    min-height: 100px;
+    height: auto;
+    margin: 1px;
+    }
+
+#cal-req-day {
+    background-color: #f5e1dd;
+    }
+
+#cal-today {
+    background-color: #e3e3e3;
+    }
+</style>
+
+
+{% if messages %}
+<div class="messages">
+{% for msg in messages %}
+<div class="alert alert-{{msg.level_tag}}" role="alert">{{msg.message}}</div>
+</li>
+{% endfor %}
+</div>
+{% endif %}
+
+{{ calendar|safe }}

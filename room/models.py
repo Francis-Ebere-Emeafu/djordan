@@ -68,7 +68,7 @@ class Guest(models.Model):
         return '{} {}'.format(self.other_names, self.surname)
 
     class Meta:
-        ordering = ["-arrival_date"]
+        ordering = ["-id", "-arrival_date"]
 
 
 class Facility(models.Model):

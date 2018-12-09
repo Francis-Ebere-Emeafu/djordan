@@ -72,6 +72,8 @@ def paid_check_out(request, id):
     bills = Bill.objects.filter(guest=guest)
     if guest:
         guest.checked_out = True
+        guest.room.occupied = False
+        guest.room.save()
         guest.save()
 
     days = guest.departure_date - guest.arrival_date

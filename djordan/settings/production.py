@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'room.apps.RoomConfig',
     'user_profile.apps.UserProfileConfig',
+    # 'events2.apps.Events2Config',
 ]
 
 MIDDLEWARE = [

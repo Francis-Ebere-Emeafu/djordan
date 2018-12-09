@@ -1,0 +1,68 @@
+{% extends "room/base.html" %}
+{% load static from staticfiles %}
+
+{% block extra-css %}
+<style>
+    .panel {
+        background-color: #f7ffe6;
+    }
+
+    .cal-day {
+    outline: .5px solid #cccccc;
+    min-height: 100px;
+    height: auto;
+    margin: 1px;
+}
+
+#cal-req-day {
+    background-color: #f5e1dd;
+}
+
+#cal-today {
+    background-color: #e3e3e3;
+}
+</style>
+<link href="{% static 'tracker/css/dataTables.bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'tracker/css/dataTables.responsive.css' %}" rel="stylesheet">
+{% endblock extra-css %}
+
+{% block pageheader %}
+    <h1 class="page-header">Guests</h1>
+{% endblock pageheader %}
+
+{% block panelheader %}
+List of Guests
+{% endblock panelheader %}
+
+{% block breadcrumb %}
+    <!-- START BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
+        <li class="active">List of Guests</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+{% endblock breadcrumb %}
+
+{% block pagecontent %}
+
+{% if messages %}
+<div class="messages">
+{% for msg in messages %}
+<div class="alert alert-{{msg.level_tag}}" role="alert">{{msg.message}}</div>
+</li>
+{% endfor %}
+</div>
+{% endif %}
+
+{{ calendar|safe }}
+
+{% endblock pagecontent %}
+
+{% block extra-footer-js %}
+<script type="text/javascript" src="{% static 'tracker/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'tracker/js/dataTables.bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+$('#id_term').addClass('form-control');
+$('#id_term').attr('placeholder', 'Search');
+</script>
+{% endblock extra-footer-js %}
