@@ -1,7 +1,7 @@
 from django import forms
 
 from room.models import Guest, Room, Booking, Requisition, Purchase,\
-    Transfer, Facility
+    Transfer, Facility, HouseKeeping
 
 
 class GuestForm(forms.ModelForm):
@@ -62,6 +62,8 @@ class BookingForm(forms.ModelForm):
 
 
 class RequisitionForm(forms.ModelForm):
+    queryset = HouseKeeping.objects.all()
+    item = forms.ModelChoiceField(queryset, empty_label="Select housekeeping item")
 
     class Meta:
         model = Requisition
