@@ -87,7 +87,7 @@ def stock_outflow(request):
 
 def stock_levels(request):
     stock = Inventory.objects.all()
-    context = {'stock': stock}
+    # context = {'stock': stock}
     return render(request, 'store/stock_levels.html', context)
 
 
