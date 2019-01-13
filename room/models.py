@@ -157,12 +157,13 @@ class Inventory(models.Model):
     MAIN_BAR = 1
     SWIMMING_POOL_BAR = 2
     STORE = 3
+    SELECT = 4
     LOCATIONS = enumerate(
-        ('Restaurant', 'Main Bar', 'Pool Bar', 'Store'))
+        ('Restaurant', 'Main Bar', 'Pool Bar', 'Store', 'Select Location'))
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
-    location = models.PositiveIntegerField(choices=LOCATIONS)
+    location = models.PositiveIntegerField(choices=LOCATIONS, default=4)
 
     def __str__(self):
         return unicode(self.item)

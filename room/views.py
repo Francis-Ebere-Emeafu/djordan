@@ -69,7 +69,7 @@ def change_departure_date(request, id):
 
 def paid_check_out(request, id):
     guest = get_object_or_404(Guest, pk=id)
-    bills = Bill.objects.filter(guest=guest)
+    bills = Bill.objects.filter(guest=guest, paid=False)
     if guest:
         guest.checked_out = True
         guest.room.occupied = False
@@ -107,7 +107,7 @@ def paid_check_out(request, id):
 
 def pay_check_out(request, id):
     guest = get_object_or_404(Guest, pk=id)
-    bills = Bill.objects.filter(guest=guest)
+    bills = Bill.objects.filter(guest=guest, paid=False)
     service_bills = bills.aggregate(
         Sum('amount'))['amount__sum'] or Decimal(0)
 
@@ -128,7 +128,7 @@ def pay_check_out(request, id):
 
 def pre_check_out(request, id):
     guest = get_object_or_404(Guest, pk=id)
-    bills = Bill.objects.filter(guest=guest)
+    bills = Bill.objects.filter(guest=guest, paid=False)
     service_bills = bills.aggregate(
         Sum('amount'))['amount__sum'] or Decimal(0)
 

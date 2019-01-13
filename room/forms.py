@@ -1,7 +1,7 @@
 from django import forms
 
 from room.models import Guest, Room, Booking, Requisition, Purchase,\
-    Transfer, Facility, HouseKeeping
+    Transfer, Facility, HouseKeeping, Bill, Inventory, Item
 
 
 class GuestForm(forms.ModelForm):
@@ -82,3 +82,38 @@ class TransferForm(forms.ModelForm):
     class Meta:
         model = Transfer
         exclude = ['when']
+
+
+class BillForm(forms.ModelForm):
+    queryset = Guest.objects.filter(checked_out=False)
+    guest = forms.ModelChoiceField(queryset, empty_label='select guest')
+    bill_date = forms.DateField(
+        widget=forms.TextInput(attrs={'class': 'datepicker'}))
+
+    class Meta:
+        model = Bill
+        exclude = ['service']
+
+
+class InventoryForm(forms.ModelForm):
+    queryset = Item.objects.all()
+    item = forms.ModelChoiceField(queryset, empty_label='Select Item')
+
+    class Meta:
+        model = Inventory
+        exclude = ['location']
+
+
+class InventoryOutflowForm(forms.ModelForm):
+    queryset = Item.objects.all()
+    item = forms.ModelChoiceField(queryset, empty_label='Select Item')
+
+    class Meta:
+        model = Inventory
+        exclude = []
+
+    def clean_location(self):
+        if 'location' in self.cleaned_data:
+            if self.cleaned_data['location'] == 4:
+                raise forms.ValidationError('Select a valid location')
+        return self.cleaned_data['location']
