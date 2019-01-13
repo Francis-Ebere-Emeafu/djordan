@@ -4,18 +4,18 @@
 
 
 {% block pageheader %}
-    <h1 class="page-header">Guest's Bill</h1>
+    <h1 class="page-header">Stock Inflow</h1>
 {% endblock pageheader %}
 
 {% block panelheader %}
-Bill
+Stock Inflow
 {% endblock panelheader %}
 
 {% block breadcrumb %}
     <!-- START BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="{% url 'hotel_guest_list' %}">Home</a></li>
-        <li class="active">Guest's Bill</li>
+        <li class="active">Stock Inflow</li>
     </ul>
     <!-- END BREADCRUMB -->
 {% endblock breadcrumb %}
@@ -34,7 +34,7 @@ Bill
                     </div>
                 {% endfor %}
             {% endif %}
-            <div class="panel-heading"><h3>Guest Laundry Bill</h3></div>
+            <div class="panel-heading"><h3>Enter Stock Inflow</h3></div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">

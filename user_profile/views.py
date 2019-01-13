@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from user_profile.models import UserProfile
 from user_profile.utils import *
 
-from room.models import Bill
+from room.models import Bill, Inventory
 from room.forms import BillForm, InventoryForm, InventoryOutflowForm
 
 
@@ -86,7 +86,8 @@ def stock_outflow(request):
 
 
 def stock_levels(request):
-    context = {}
+    stock = Inventory.objects.all()
+    context = {'stock': stock}
     return render(request, 'store/stock_levels.html', context)
 
 
